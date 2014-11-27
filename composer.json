@@ -1,0 +1,40 @@
+{
+    "_-x-vim-formatting": " vim: set ft=javascript ts=4 sw=4 et : ",
+
+    "name": "vend/pheat-bundle",
+    "description": "Integrates a feature manager into Symfony2",
+    "keywords": ["bundle", "feature", "manager"],
+    "type":    "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vend Devteam",
+            "email": "devteam@vendhq.com"
+        }
+    ],
+
+    "require": {
+        "php":     ">=5.4.0",
+        "psr/log": "~1.0.0",
+
+        "vend/pheat": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.3",
+        "monolog/monolog": "~1.11",
+        "doctrine/doctrine-bundle": "*",
+        "symfony/symfony": "~2.5"
+    },
+
+    "autoload": {
+        "psr-4": {
+            "Vend\\PheatBundle\\": ""
+        }
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        }
+    }
+}
