@@ -1,0 +1,43 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+    <img width="24" height="28" alt="Pheat" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABPklEQVR4Ab3QMWsTARjH4ceQQMQuim75AKWgESrUrQcKrXsFq1s/gS4dyzm2oJOD4BztUlyLHRLo5GAIOmVwl6bQZjsV87rccnCXi4vPf3x5l98VVQIU72io938e2gBNVV4CgOdGjv2DVGYTIBULLXOfJgbqJdYNjCwsdaw9t4YQAkCiDTSZW6PrjhtGvsjqakRhf7xyFSAtqyGEM7vWLdt2JIx18kolNTbwyTPnEk+kPtjy3juPyms0fHXmpk373girepbsCU8BijXuCrvYF/kmVrRM9RqKBjLcxmeJa3jroXM/PPbb0D2lXgjLeYwHOBUChy6U2hC2sSpMnAonYKyv1C0/HaFn4ptwYmZN18yBCq+FLUtWpAJrWoYudVS4LvyypwXoGgo7quU5p/oOjc1c2qH+4aPvLvQd6AB/AUFAlT61pVqAAAAAAElFTkSuQmCC"/>
+    <span class="sf-toolbar-status">{{ collector.getResolvedCount }}</span>
+    {% endset %}
+    {% set text %}
+    <div class="sf-toolbar-info-piece">
+        <b>Resolved</b>
+        <span>{{ collector.getResolvedCount }}</span>
+    </div>
+    <div class="sf-toolbar-info-piece">
+        <b>Active</b>
+        <span>{{ collector.getActiveCount }}</span>
+    </div>
+    <div class="sf-toolbar-info-piece">
+        <b>Total</b>
+        <span>{{ collector.getTotalCount }}</span>
+    </div>
+    {% endset %}
+    {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+    <span class="icon">
+        <img width="24" height="28" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABPklEQVR4Ab3QMWsTARjH4ceQQMQuim75AKWgESrUrQcKrXsFq1s/gS4dyzm2oJOD4BztUlyLHRLo5GAIOmVwl6bQZjsV87rccnCXi4vPf3x5l98VVQIU72io938e2gBNVV4CgOdGjv2DVGYTIBULLXOfJgbqJdYNjCwsdaw9t4YQAkCiDTSZW6PrjhtGvsjqakRhf7xyFSAtqyGEM7vWLdt2JIx18kolNTbwyTPnEk+kPtjy3juPyms0fHXmpk373girepbsCU8BijXuCrvYF/kmVrRM9RqKBjLcxmeJa3jroXM/PPbb0D2lXgjLeYwHOBUChy6U2hC2sSpMnAonYKyv1C0/HaFn4ptwYmZN18yBCq+FLUtWpAJrWoYudVS4LvyypwXoGgo7quU5p/oOjc1c2qH+4aPvLvQd6AB/AUFAlT61pVqAAAAAAElFTkSuQmCC" alt="Pheat" />
+    </span>
+    <strong>Pheat</strong>
+    <span class="count">
+        <span>{{ collector.getResolvedCount }}</span>
+    </span>
+</span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Features</h2>
+
+    <h2>Context</h2>
+
+    <h2>Providers</h2>
+{% endblock %}

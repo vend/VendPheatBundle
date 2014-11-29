@@ -16,7 +16,7 @@ A typical feature rollout might involve:
 - Activating the feature for 10%, 30% then 100% of customers
 - Having the feature enabled long-term, but with the ability to turn it off at any time
 
-The idea is to use commits and developer time for as little of this as possible, and to 
+The idea is to use commits and developer time for as little of this as possible, and to
 make the whole thing 'push-button' easy.
 
 To that end, this bundle will provide a UI for feature management that can be integrated into your
@@ -45,3 +45,52 @@ class AppKernel extends Kernel
     }
 }
 ```
+
+## Configuration
+
+The configuration root node is `pheat`:
+
+```yaml
+pheat:
+    # Provide initial static feature configuration right in your config.yml
+    features:
+        # Set features on or off
+        active_feature:   true
+        inactive_feature: false
+        unknown_feature:  null
+
+        # Provide ratios
+        ratio_feature:            0.1
+        ratio_feature_percentage: 50%
+        ratio_feature_full:
+            enabled: true
+            vary:    username
+            ratio:   0.1
+
+        # And variants
+        variant_feature:
+            enabled: true
+            vary:    username
+            variants:
+                variant_one:   30
+                variant_two:   30
+                variant_three: default
+                variant_four:  10
+
+    # Override the default service classes
+    manager:
+        class: Pheat\Manager
+
+    context:
+        class: Vend\PheatBundle\Pheat\Context
+
+    # Turn off the built-in provider integrations
+    providers:
+        session: true
+        config:  true
+```
+
+## Credits
+
+* Icon made by [Picol](http://picol.org) from [flaticon.com](http://www.flaticon.com)
+  is licensed under [CC BY 3.0](http://creativecommons.org/licenses/by/3.0/)
