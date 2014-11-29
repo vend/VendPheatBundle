@@ -1,0 +1,12 @@
+services:
+    pheat.manager:
+        class: %pheat.manager_class%
+        arguments:
+            - "@pheat.context"
+
+    pheat.context:
+        class: %pheat.context_class%
+
+parameters:
+    pheat.manager_class: 'Pheat\Manager'
+    pheat.context_class: 'Vend\PheatBundle\Pheat\Context'
