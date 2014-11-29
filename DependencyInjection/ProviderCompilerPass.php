@@ -26,7 +26,7 @@ class ProviderCompilerPass implements CompilerPassInterface
             }
         }
 
-        asort($providers, SORT_ASC | SORT_NUMERIC);
+        asort($providers, SORT_DESC | SORT_NUMERIC);
 
         foreach ($providers as $id => $priority) {
             $definition->addMethodCall(
