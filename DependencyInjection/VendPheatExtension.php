@@ -4,7 +4,7 @@ namespace Vend\PheatBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class VendPheatExtension extends Extension
@@ -15,12 +15,12 @@ class VendPheatExtension extends Extension
 
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new YamlFileLoader(
+        $loader = new XmlFileLoader(
             $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
-        $loader->load('services.yml');
+        $loader->load('services.xml');
     }
 
     public function getAlias()
@@ -31,5 +31,10 @@ class VendPheatExtension extends Extension
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
         return new Configuration($config, $container);
+    }
+
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/schema';
     }
 }
