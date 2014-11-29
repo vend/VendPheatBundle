@@ -3,12 +3,13 @@
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    <services>
-        <service id="pheat.manager" class="%pheat.manager.class%">
-            <argument type="service" id="pheat.context" />
-        </service>
+    <parameters>
+        <parameter key="pheat.provider.session.class">Vend\PheatBundle\Pheat\Provider\SessionProvider</parameter>
+    </parameters>
 
-        <service id="pheat.context" class="%pheat.context.class%">
+    <services>
+        <service id="pheat.provider.session" class="%pheat.provider.session.class%">
+            <tag name="pheat.provider" priority="0" />
         </service>
     </services>
 </container>
