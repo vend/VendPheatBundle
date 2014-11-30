@@ -13,7 +13,7 @@
 
         <service id="pheat.data_collector" class="Vend\PheatBundle\DataCollector\PheatDataCollector">
             <argument type="service" id="pheat.manager" />
-            <tag name="data_collector" template="VendPheatBundle::profiler" id="pheat" />
+            <tag name="data_collector" template="VendPheatBundle:DataCollector:profiler" id="pheat" />
         </service>
     </services>
 </container>

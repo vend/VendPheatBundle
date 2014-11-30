@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('context')
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('class')
                             ->isRequired()

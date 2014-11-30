@@ -27,6 +27,9 @@ class VendPheatExtension extends Extension
 
         if ($config['providers']['config']) {
             $loader->load('config.xml');
+
+            $container->getDefinition('pheat.provider.config')
+                      ->setArguments([$config['features']]);
         }
 
         $loader->load('services.xml');

@@ -1,2 +1,28 @@
-<h1>Feature Manager</h1>
+{% extends "VendPheatBundle::layout.html.twig" %}
 
+{% block vend_pheat_content %}
+    {% include('VendPheatBundle:Management:header.html.twig') %}
+
+    <table class="vend_pheat_features">
+        <tbody>
+            <tr>
+                <th rowspan="2">Feature Name</th>
+                <th colspan="{{ providers|length }}">Providers</th>
+            </tr>
+            <tr>
+                {% for provider in providers %}
+                    <th>{{ provider.getName|humanize }}</th>
+                {% endfor %}
+            </tr>
+            {% for name, active_features in features.getAll %}
+                <tr class="vend_pheat_feature">
+                    <td>{{ name }}</td>
+                    {% for provider in providers %}
+                        <td class="vend_pheat_feature_provider">{{ active_features[provider.getName].state | default('unknown') }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock vend_pheat_content %}

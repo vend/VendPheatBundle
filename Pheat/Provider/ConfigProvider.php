@@ -8,6 +8,13 @@ use Pheat\Provider\ProviderInterface;
 
 class ConfigProvider implements ProviderInterface
 {
+    protected $configuration;
+
+    public function __construct(array $configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
     public function getName()
     {
         return 'config';
