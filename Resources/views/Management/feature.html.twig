@@ -1,0 +1,9 @@
+{% if feature is null or feature.getStatus is null %}
+    unknown
+{% elseif feature.getStatus %}
+    active
+{% elseif not feature.getStatus %}
+    inactive
+{% else %}
+    {{ feature.getStatus|json_encode }}
+{% endif %}

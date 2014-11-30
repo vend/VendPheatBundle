@@ -23,7 +23,14 @@ class PheatDataCollector extends BaseDataCollector
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
         $this->data['context'] = $this->manager->getContext();
-        $this->data['features'] = $this->manager->getFeatureSet();
+
+        $this->data['features'] = [];
+        $this->data['feature_providers'] = [];
+
+        foreach ($this->manager->getFeatureSet()->getAllCanonical() as $name => $feature) {
+            $this->data['features'][$name]          = $feature->getStatus();
+            $this->data['feature_providers'][$name] = $feature->getProvider()->getName();
+        }
     }
 
     public function getName()
@@ -38,18 +45,11 @@ class PheatDataCollector extends BaseDataCollector
 
     public function getActiveCount()
     {
-        return array_reduce($this->data['features']->getAll(), function ($carry, $item) {
-            /**
-             * @var $item FeatureInterface
-             */
-            return $carry + ($item->getStatus() ? 1 : 0);
-        }, 0);
+        return count(array_filter($this->data['features']));
     }
 
     public function getTotalCount()
     {
         return count($this->data['features']);
     }
-
-
 }

@@ -1,7 +1,7 @@
 {% extends "VendPheatBundle::layout.html.twig" %}
 
 {% block vend_pheat_content %}
-    {% include('VendPheatBundle:Management:header.html.twig') %}
+    {{ include('VendPheatBundle:Management:header.html.twig') }}
 
     <table class="vend_pheat_features">
         <tbody>
@@ -18,7 +18,9 @@
                 <tr class="vend_pheat_feature">
                     <td>{{ name }}</td>
                     {% for provider in providers %}
-                        <td class="vend_pheat_feature_provider">{{ active_features[provider.getName].state | default('unknown') }}</td>
+                        <td class="vend_pheat_feature_provider">
+                            {{ include('VendPheatBundle:Management:feature.html.twig', {'feature': active_features[provider.getName] | default(null)}) }}
+                        </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
