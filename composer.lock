@@ -50,12 +50,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vend/pheat.git",
-                "reference": "a68c363742263d83095aa497feaa7924a4f768ab"
+                "reference": "62e414876bf1dd905fd3f4e16301c32577e52775"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vend/pheat/zipball/a68c363742263d83095aa497feaa7924a4f768ab",
-                "reference": "a68c363742263d83095aa497feaa7924a4f768ab",
+                "url": "https://api.github.com/repos/vend/pheat/zipball/62e414876bf1dd905fd3f4e16301c32577e52775",
+                "reference": "62e414876bf1dd905fd3f4e16301c32577e52775",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 }
             ],
             "description": "Feature manager",
-            "time": "2014-11-27 03:36:10"
+            "time": "2014-12-01 00:35:13"
         }
     ],
     "packages-dev": [
