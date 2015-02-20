@@ -4,4 +4,7 @@ syntax: glob
 composer.phar
 vendor
 bin/*
+
+# Build
+phpunit.xml
 build/*
