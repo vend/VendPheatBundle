@@ -1,19 +1,15 @@
-VendPheatBundle
-###############
+# VendPheatBundle
 
 A Symfony bundle that provides integration for Pheat, a dynamic feature
 manager.
 
-Installation
-============
-
-Step 1: Download the VendPheatBundle
-------------------------------------
+## Installation
+### Step 1: Download the VendPheatBundle
 
 Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
-```bash
+```sh
 $ composer require vend/pheat-bundle "~0"
 ```
 
@@ -21,8 +17,7 @@ This command requires you to have Composer installed globally, as explained
 in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
 of the Composer documentation.
 
-Step 2: Enable it
------------------
+### Step 2: Enable it
 
 Then, enable the bundle by adding the following line in the `app/AppKernel.php`
 file of your project:
@@ -40,13 +35,13 @@ class AppKernel extends Kernel
 }
 ```
 
-Step 3: (Optional) Configure the Bundle
-----------------------------
+### Step 3: (Optional) Configure the Bundle
 
 The configuration root node is `pheat`.
 
-There's no configuration required to use the feature manager. But you'll probably want to have at least one
-feature defined. You can do that in your `app/config/config.yml` like this:
+There's no configuration required to use the feature manager. But you'll
+probably want to have at least one feature defined. You can do that in your
+`app/config/config.yml` like this:
 
 ```yaml
 pheat:
@@ -96,8 +91,7 @@ pheat:
         config:  true
 ```
 
-Step 4: (Optional) Configure Custom Providers
----------------------------------------------
+### Step 4: (Optional) Configure Custom Providers
 
 The bundle comes with a number of preconfigured feature providers. If you'd
 like to configure your own, just tag a service that implements
@@ -117,11 +111,9 @@ have the highest priorities.
 
 The preconfigured providers all have priorities in the range 0 to 10.
 
-Step 5: (Optional) Configure the Management Interface
------------------------------------------------------
+### Step 5: (Optional) Configure the Management Interface
 
-Step 5a: Routing
-~~~~~~~~~~~~~~~~
+#### Step 5a: Routing
 
 You can see some feature manager information in the Symfony2 profiler. But to
 actually write to the configuration, and to see more detail about what's going on,
@@ -143,8 +135,7 @@ Or in XML:
 The default path for the management interface is /features, but you can change that by importing
 the routing file `management.xml` instead of `all.xml`, and giving it a different prefix.
 
-Step 5b: Security
-~~~~~~~~~~~~~~~~~
+#### Step 5b: Security
 
 You'll also want to configure your Symfony security "firewall", because you probably don't want just
 anyone seeing the management interface. Your configuration here may vary, but here's how it might look
@@ -158,8 +149,7 @@ security:
         - { path: /features, role: ROLE_ADMIN }
 ```
 
-Step 5c: Customize the Management Layout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#### Step 5c: Customize the Management Layout
 
 The management interface uses the `Resources/views/layout.html.twig` layout in
 this bundle by default. It's pretty basic, and won't match your application. We really
