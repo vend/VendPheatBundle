@@ -13,6 +13,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 class SessionProvider extends Provider implements ProviderInterface, WritableProviderInterface
 {
     /**
+     * @var AttributeBag
+     */
+    protected $bag;
+
+    /**
      * @var Session
      */
     protected $session;
@@ -22,8 +27,10 @@ class SessionProvider extends Provider implements ProviderInterface, WritablePro
      */
     public function __construct(Session $session)
     {
+        $this->session = $session;
+
         $this->bag = new AttributeBag('_pheat');
-        $session->registerBag($this->bag);
+        $this->session->registerBag($this->bag);
     }
 
     /**
@@ -35,15 +42,6 @@ class SessionProvider extends Provider implements ProviderInterface, WritablePro
     }
 
     /**
-     * @param ContextInterface $context
-     * @return FeatureInterface[]
-     */
-    public function getFeatures(ContextInterface $context)
-    {
-        return $this->fromConfig($this->bag->all());
-    }
-
-    /**
      * Set the feature to the enclosed status, under the given context
      *
      * @param ContextInterface $context
@@ -52,5 +50,17 @@ class SessionProvider extends Provider implements ProviderInterface, WritablePro
      */
     public function setFeature(ContextInterface $context, FeatureInterface $feature)
     {
+        $this->bag->set($feature->getName(), $feature->getConfiguration());
+        $this->session->save();
+    }
+
+    /**
+     * Gets the stored configuration for all the features for this provider
+     *
+     * @return array
+     */
+    protected function getConfiguration()
+    {
+        return $this->bag->all();
     }
 }

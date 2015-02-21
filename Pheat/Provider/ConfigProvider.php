@@ -8,7 +8,7 @@ use Pheat\Feature\FeatureInterface;
 use Pheat\Provider\Provider;
 use Pheat\Provider\ProviderInterface;
 
-class ConfigProvider extends Provider implements ProviderInterface
+class ConfigProvider extends Provider
 {
     protected $configuration;
 
@@ -23,11 +23,12 @@ class ConfigProvider extends Provider implements ProviderInterface
     }
 
     /**
-     * @param ContextInterface $context
-     * @return FeatureInterface[]
+     * Gets the stored configuration for all the features for this provider
+     *
+     * @return array
      */
-    public function getFeatures(ContextInterface $context)
+    protected function getConfiguration()
     {
-        return $this->fromConfig($this->configuration);
+        return $this->configuration;
     }
 }
