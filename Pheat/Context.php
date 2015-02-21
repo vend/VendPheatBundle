@@ -6,6 +6,4 @@ use Pheat\Context as BaseContext;
 
 class Context extends BaseContext
 {
-
-
 }

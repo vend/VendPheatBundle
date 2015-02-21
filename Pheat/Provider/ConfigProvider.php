@@ -5,9 +5,10 @@ namespace Vend\PheatBundle\Pheat\Provider;
 use Pheat\ContextInterface;
 use Pheat\Feature\Feature;
 use Pheat\Feature\FeatureInterface;
+use Pheat\Provider\Provider;
 use Pheat\Provider\ProviderInterface;
 
-class ConfigProvider implements ProviderInterface
+class ConfigProvider extends Provider implements ProviderInterface
 {
     protected $configuration;
 
@@ -27,18 +28,6 @@ class ConfigProvider implements ProviderInterface
      */
     public function getFeatures(ContextInterface $context)
     {
-        $features = [];
-
-        foreach ($this->configuration as $name => $feature) {
-            if (!empty($feature['variants'])) {
-
-            } elseif (!empty($feature['ratio'])) {
-
-            } else {
-                $features[] = new Feature($name, $feature['enabled'], $this);
-            }
-        }
-
-        return $features;
+        return $this->fromConfig($this->configuration);
     }
 }

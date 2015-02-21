@@ -21,11 +21,15 @@ class VendPheatExtension extends Extension
         $container->setParameter('pheat.manager.class', $config['manager']['class']);
         $container->setParameter('pheat.context.class', $config['context']['class']);
 
-        if ($config['providers']['session']) {
+        $container->addAliases([
+            'pheat.context' => $config['context']['service']
+        ]);
+
+        if (!empty($config['providers']['session'])) {
             $loader->load('session.xml');
         }
 
-        if ($config['providers']['config']) {
+        if (!empty($config['providers']['config'])) {
             $loader->load('config.xml');
 
             $container->getDefinition('pheat.provider.config')

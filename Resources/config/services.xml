@@ -8,7 +8,7 @@
             <argument type="service" id="pheat.context" />
         </service>
 
-        <service id="pheat.context" class="%pheat.context.class%">
+        <service id="pheat.context.default" class="%pheat.context.class%">
         </service>
 
         <service id="pheat.data_collector" class="Vend\PheatBundle\DataCollector\PheatDataCollector">

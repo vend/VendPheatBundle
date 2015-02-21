@@ -10,6 +10,7 @@
     <services>
         <service id="pheat.provider.session" class="%pheat.provider.session.class%">
             <tag name="pheat.provider" priority="10" />
+            <argument type="service" id="session" />
         </service>
     </services>
 </container>
