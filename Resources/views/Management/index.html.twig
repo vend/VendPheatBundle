@@ -9,30 +9,31 @@
 {% block vend_pheat_content %}
     {{ include('VendPheatBundle:Management:header.html.twig') }}
 
-    <table class="vend_pheat_features">
-        <tbody>
-            <tr>
-                <th rowspan="2">Feature Name</th>
-                <th colspan="{{ providers|length }}">Providers</th>
-            </tr>
-            <tr>
-                {% for provider in providers %}
-                    <th>{{ provider.getName|humanize }}</th>
-                {% endfor %}
-            </tr>
-            {% for name, active_features in features.getAll %}
-                <tr class="vend_pheat_feature">
-                    <td>{{ name }}</td>
+    <form action="{{ path('vend_pheat_management_set_features') }}" method="post">
+        <table class="vend_pheat_features">
+            <tbody>
+                <tr>
+                    <th rowspan="2">Feature Name</th>
+                    <th colspan="{{ providers|length }}">Providers</th>
+                </tr>
+                <tr>
                     {% for provider in providers %}
-                        {{
-                            render(controller('VendPheatBundle:Management:feature', {
-                                'feature':  name,
-                                'provider': provider.getName
-                            }))
-                        }}
+                        <th>{{ provider.getName|humanize }}</th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                {% for name, _ in features.getAll %}
+                    <tr class="vend_pheat_feature">
+                        <td>{{ name }}</td>
+                        {% for provider in providers %}
+                            {{ content[name][provider.getName]|raw }}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="vend_pheat_features_save">
+            <input type="submit" value="Save Changes" />
+        </div>
+    </form>
 {% endblock vend_pheat_content %}

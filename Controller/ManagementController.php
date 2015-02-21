@@ -5,13 +5,11 @@ namespace Vend\PheatBundle\Controller;
 use Pheat\Feature\Feature;
 use Pheat\Feature\FeatureInterface;
 use Pheat\Manager;
-use Pheat\Provider\NullProvider;
 use Pheat\Provider\ProviderInterface;
 use Pheat\Provider\WritableProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Vend\PheatBundle\Form\Type\FeatureType;
 
 class ManagementController extends Controller
@@ -24,110 +22,113 @@ class ManagementController extends Controller
         return $this->get('pheat.manager');
     }
 
+
     public function indexAction(Request $request)
     {
-        $manager = $this->getManager();
+        $manager   = $this->getManager();
+        $forms = $this->getForms($manager);
 
-        return $this->render('VendPheatBundle:Management:index.html.twig', [
-            'providers' => $manager->getProviders(),
-            'features'  => $manager->getFeatureSet()
-        ]);
-    }
+        if ($request->isMethod('post')) {
+            $redirect = true;
 
-    /**
-     * POST action that receives requests to set feature configurations
-     *
-     * Needless to say, this isn't a route you want Joe Public getting their
-     * hands on. Probably only for your site admins.
-     *
-     * The default route to this action is /features/{provider}/{name} - you
-     * should firewall accordingly.
-     *
-     * @param Request $request
-     */
-    public function setAction(Request $request)
-    {
+            foreach ($forms as $feature => $providerEntry) {
+                foreach ($providerEntry as $provider => $entry) {
+                    /**
+                     * @var Form $form
+                     */
+                    $form = $entry['form'];
 
+                    /**
+                     * @var ProviderInterface|WritableProviderInterface $provider
+                     */
+                    $provider = $entry['provider'];
 
-        $manager  = $this->getManager();
+                    $form->handleRequest($request);
 
-
-        if (!$provider instanceof WritableProviderInterface) {
-            throw new MethodNotAllowedException('Not a writable provider');
-        }
-
-
-
-        $form = $this->createForm(new FeatureType(), $feature);
-
-    }
-
-    /**
-     * Component that displays and edits individual feature forms
-     *
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function featureAction(Request $request)
-    {
-        $manager = $this->getManager();
-
-        $providerName = $request->get('provider');
-        $name         = $request->get('name');
-        $provider     = $manager->getProvider($providerName);
-
-        if (!$provider) {
-            throw new NotFoundHttpException('Unknown provider');
-        }
-
-        if (!$provider instanceof ProviderInterface) {
-            throw new \InvalidArgumentException('Expected ' . ProviderInterface::class);
-        }
-
-        $writable = $provider instanceof WritableProviderInterface;
-        $feature  = $manager->getFeatureSet()->getFeatureFromProvider($name, $provider);
-
-        if (!$feature) {
-            throw new NotFoundHttpException('Feature not found');
-        }
-
-        //if ($feature === null) {
-        //    $feature = new Feature('unknown', null, $provider);
-        //}
-
-        $parameters = [
-            'feature'  => $feature,
-            'name'     => $feature->getName(),
-            'provider' => $provider->getName(),
-            'config'   => $feature->getConfiguration(),
-            'status'   => $feature->getStatus(),
-            'class'    => $this->getFeatureClass($feature->getStatus())
-        ];
-
-        $view = $writable
-            ? 'VendPheatBundle:Management:feature-rw.html.twig'
-            : 'VendPheatBundle:Management:feature-ro.html.twig';
-
-        if ($writable) {
-            /**
-             * @var WritableProviderInterface $provider
-             */
-            $form = $this->createForm(new FeatureType(), $feature);
-
-            if ($request->isMethod('post')) {
-                $form->handleRequest($request);
-
-                if ($form->isValid()) {
-                    $provider->setFeature($manager->getContext(), $feature);
-
-                    return $this->redirect($this->generateUrl('vend_pheat_management'));
+                    if ($form->isValid()) {
+                        $provider->setFeature($manager->getContext(), $form->getData());
+                    } else {
+                        $redirect = false;
+                    }
                 }
             }
 
-            $parameters['form'] = $form->createView();
+            if ($redirect) {
+                return $this->redirect($this->generateUrl('vend_pheat_management'));
+            }
         }
 
-        return $this->render($view, $parameters);
+        $content = [];
+
+        foreach ($manager->getFeatureSet()->getAll() as $name => $_) {
+            $content[$name] = [];
+
+            foreach ($manager->getProviders() as $provider) {
+                /**
+                 * @var ProviderInterface $provider
+                 */
+                $providerName = $provider->getName();
+
+                /**
+                 * @var FeatureInterface $feature
+                 */
+                $feature = $manager->getFeatureSet()->getFeatureFromProvider($name, $provider);
+
+                $parameters = [
+                    'feature'  => $feature,
+                    'name'     => $name,
+                    'provider' => $providerName,
+                    'config'   => $feature->getConfiguration(),
+                    'status'   => $feature->getStatus(),
+                    'class'    => $this->getFeatureClass($feature->getStatus())
+                ];
+
+                if ($provider instanceof WritableProviderInterface && isset($forms[$name][$providerName])) {
+                    $parameters['form'] = $forms[$name][$providerName]['form']->createView();
+                    $view = 'VendPheatBundle:Management:feature-rw.html.twig';
+                } else {
+                    $view = 'VendPheatBundle:Management:feature-ro.html.twig';
+                }
+
+                $content[$name][$providerName] = $this->renderView($view, $parameters);
+            }
+        }
+
+        return $this->render('VendPheatBundle:Management:index.html.twig', [
+            'providers' => $manager->getProviders(),
+            'features'  => $manager->getFeatureSet(),
+            'content'   => $content
+        ]);
+    }
+
+    protected function getForms(Manager $manager)
+    {
+        $forms   = [];
+
+        foreach ($manager->getFeatureSet()->getAll() as $name => $_) {
+            $forms[$name] = [];
+
+            foreach ($manager->getProviders() as $provider) {
+                /**
+                 * @var ProviderInterface $provider
+                 */
+                if (!$provider instanceof WritableProviderInterface) {
+                    continue;
+                }
+
+                $providerName = $provider->getName();
+                $feature = $manager->getFeatureSet()->getFeatureFromProvider($name, $provider, new Feature($name, null, $provider));
+
+                $form = $this->createForm(new FeatureType($providerName, $name, $manager), $feature);
+
+                $forms[$name][$providerName] = [
+                    'provider' => $provider,
+                    'form'     => $form
+                ];
+            }
+        }
+
+        return $forms;
     }
 
     /**

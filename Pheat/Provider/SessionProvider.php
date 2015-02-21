@@ -8,6 +8,7 @@ use Pheat\Provider\ContextProviderInterface;
 use Pheat\Provider\Provider;
 use Pheat\Provider\WritableProviderInterface;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class SessionProvider extends Provider implements WritableProviderInterface, ContextProviderInterface
@@ -29,7 +30,7 @@ class SessionProvider extends Provider implements WritableProviderInterface, Con
     {
         $this->session = $session;
 
-        $this->bag = new AttributeBag('_pheat');
+        $this->bag = new NamespacedAttributeBag('_pheat');
         $this->session->registerBag($this->bag);
     }
 
