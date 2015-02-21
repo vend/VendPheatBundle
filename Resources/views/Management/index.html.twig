@@ -1,5 +1,11 @@
 {% extends "VendPheatBundle::layout.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link href="{{ asset('css/contact.css') }}" rel="stylesheet" />
+{% endblock %}
+
 {% block vend_pheat_content %}
     {{ include('VendPheatBundle:Management:header.html.twig') }}
 
@@ -18,13 +24,15 @@
                 <tr class="vend_pheat_feature">
                     <td>{{ name }}</td>
                     {% for provider in providers %}
-                        <td class="vend_pheat_feature_provider">
-                            {{ include('VendPheatBundle:Management:feature.html.twig', {'feature': active_features[provider.getName] | default(null)}) }}
-                        </td>
+                        {{
+                            render(controller('VendPheatBundle:Management:feature', {
+                                'feature':  name,
+                                'provider': provider.getName
+                            }))
+                        }}
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-
 {% endblock vend_pheat_content %}

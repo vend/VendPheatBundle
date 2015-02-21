@@ -1,0 +1,9 @@
+<td class="vend_pheat_feature_provider {{ class }}">
+    {% if status is null %}
+        &mdash;
+    {% elseif status %}
+        active
+    {% elseif not status %}
+        inactive
+    {% endif %}
+</td>
