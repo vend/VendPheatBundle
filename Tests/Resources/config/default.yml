@@ -1,0 +1,15 @@
+framework:
+    secret: blah
+    templating:
+        engines: ['twig']
+    test: true
+    form: true
+    csrf_protection:  true
+    validation:       { enable_annotations: true }
+    session:
+        storage_id: session.storage.mock_file
+    router:
+        resource: "%kernel.root_dir%/Resources/config/routing.yml"
+
+twig:
+    debug:            %kernel.debug%

@@ -5,3 +5,7 @@ if (!is_file($autoloadFile = __DIR__ . '/../vendor/autoload.php')) {
 }
 
 require $autoloadFile;
+
+if (!is_dir(__DIR__ . '/../build')) {
+    @mkdir(__DIR__ . '/../build');
+}

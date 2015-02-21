@@ -11,12 +11,12 @@
     </testsuites>
 
     <php>
-        <server name="KERNEL_DIR" value="Tests/App"/>
+        <server name="KERNEL_DIR" value="Tests"/>
     </php>
 
     <filter>
-        <whitelist>
-            <directory>./</directory>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory>.</directory>
             <exclude>
                 <directory>Resources</directory>
                 <directory>DependencyInjection</directory>

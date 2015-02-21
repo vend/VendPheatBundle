@@ -9,12 +9,12 @@ class SessionProviderTest extends Test
 {
     public function testStoredFeatures()
     {
-        $this->loadConfiguration('full.yml');
-        $this->container->compile();
+        $this->kernel->setConfig('full.yml');
+        $this->kernel->boot();
 
         $session = $this->getMockSession();
 
         $provider = new SessionProvider($session);
-        $features = $provider->getFeatures($this->container->get('pheat.context'));
+        $features = $provider->getFeatures($this->kernel->getContainer()->get('pheat.context'));
     }
 }

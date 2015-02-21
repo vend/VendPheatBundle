@@ -2,27 +2,15 @@
 
 namespace Vend\PheatBundle\Tests;
 
-use PHPUnit_Framework_TestCase;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Loader\DelegatingLoader;
-use Symfony\Component\Config\Loader\LoaderResolver;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Loader\ClosureLoader;
-use Symfony\Component\DependencyInjection\Loader\IniFileLoader;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Exception;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Vend\PheatBundle\DependencyInjection\ProviderCompilerPass;
-use Vend\PheatBundle\DependencyInjection\VendPheatExtension;
 
-abstract class Test extends PHPUnit_Framework_TestCase
+abstract class Test extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var ContainerBuilder
+     * @var AppKernel
      */
-    protected $container;
+    protected $kernel;
 
     /**
      * Creates a configuration container
@@ -31,10 +19,23 @@ abstract class Test extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->container = new ContainerBuilder();
-        $this->container->registerExtension(new VendPheatExtension());
-        $this->container->addCompilerPass(new ProviderCompilerPass());
-        $this->container->set('session', $this->getMockSession());
+        $this->kernel = new AppKernel('test', true);
+    }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->kernel->shutdown();
+        $this->kernel = null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultConfiguration()
+    {
+        return 'basics.yml';
     }
 
     /**
@@ -46,52 +47,5 @@ abstract class Test extends PHPUnit_Framework_TestCase
                         ->getMock();
 
         return $session;
-    }
-
-    protected function tearDown()
-    {
-        $this->container = null;
-    }
-
-    /**
-     * __DIR__ resolves at compile time; relative to where it occurs in source file
-     *
-     * @return array<string>
-     */
-    protected function getFixtureDirs()
-    {
-        return [__DIR__ . '/Fixtures/'];
-    }
-
-    /**
-     * Gets a configuration loader
-     *
-     * @return DelegatingLoader
-     */
-    protected function getConfigurationLoader()
-    {
-        $locator = new FileLocator($this->getFixtureDirs());
-
-        $resolver = new LoaderResolver([
-            new XmlFileLoader($this->container, $locator),
-            new YamlFileLoader($this->container, $locator),
-            new IniFileLoader($this->container, $locator),
-            new PhpFileLoader($this->container, $locator),
-            new ClosureLoader($this->container),
-        ]);
-
-        return new DelegatingLoader($resolver);
-    }
-
-    /**
-     * Loads a configuration file from the fixture dir
-     *
-     * @param string $resource
-     * @throws \Symfony\Component\Config\Exception\FileLoaderLoadException
-     */
-    protected function loadConfiguration($resource)
-    {
-        $loader = $this->getConfigurationLoader($this->container);
-        $loader->load($resource);
     }
 }

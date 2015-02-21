@@ -9,26 +9,30 @@ class VendBundleExtensionTest extends Test
 {
     public function testPhpSimpleConfig()
     {
-        $this->loadConfiguration('simple.php');
-        $this->container->compile();
+        $this->kernel->setConfig('simple.php');
+        $this->kernel->boot();
 
-        $manager = $this->container->get('pheat.manager');
+        $manager = $this->kernel->getContainer()->get('pheat.manager');
         $this->assertInstanceOf(ProviderInterface::class, $manager->getProvider('session'));
     }
 
     public function testYmlSimpleConfig()
     {
-        $this->loadConfiguration('simple.yml');
-        $this->container->compile();
+        $this->kernel->setConfig('simple.yml');
+        $this->kernel->boot();
 
-        $manager = $this->container->get('pheat.manager');
-        $this->assertNull($manager->getProvider('session'));
+        $manager = $this->kernel->getContainer()->get('pheat.manager');
+
+        $session = $manager->getProvider('session');
+        $this->assertNull($session);
     }
 
     public function testYmlFullConfig()
     {
-        $this->loadConfiguration('full.yml');
-        $this->container->compile();
+        $this->kernel->setConfig('full.yml');
+        $this->kernel->boot();
+
+        $container = $this->kernel->getContainer();
     }
 
     /**
@@ -36,7 +40,9 @@ class VendBundleExtensionTest extends Test
      */
     public function testPhpInvalidInt()
     {
-        $this->loadConfiguration('invalid-int.php');
-        $this->container->compile();
+        $this->kernel->setConfig('invalid-int.php');
+        $this->kernel->boot();
+
+        $container = $this->kernel->getContainer();
     }
 }

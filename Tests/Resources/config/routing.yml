@@ -1,0 +1,2 @@
+vend_pheat:
+    resource: "@VendPheatBundle/Resources/config/routing/all.xml"
