@@ -4,13 +4,13 @@ namespace Vend\PheatBundle\Pheat\Provider;
 
 use Pheat\ContextInterface;
 use Pheat\Feature\FeatureInterface;
+use Pheat\Provider\ContextProviderInterface;
 use Pheat\Provider\Provider;
-use Pheat\Provider\ProviderInterface;
 use Pheat\Provider\WritableProviderInterface;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Session;
 
-class SessionProvider extends Provider implements ProviderInterface, WritableProviderInterface
+class SessionProvider extends Provider implements WritableProviderInterface, ContextProviderInterface
 {
     /**
      * @var AttributeBag
@@ -62,5 +62,19 @@ class SessionProvider extends Provider implements ProviderInterface, WritablePro
     protected function getConfiguration()
     {
         return $this->bag->all();
+    }
+
+    /**
+     * Inject values into the context
+     *
+     * The provider is expected to use the ->set() interface on the context object to
+     * provide information.
+     *
+     * @param ContextInterface $context
+     * @return mixed
+     */
+    public function inject(ContextInterface $context)
+    {
+        $context->set('session_id', sha1($this->session->getId() . __CLASS__));
     }
 }
