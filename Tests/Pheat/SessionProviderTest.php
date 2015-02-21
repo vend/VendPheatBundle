@@ -12,9 +12,7 @@ class SessionProviderTest extends Test
         $this->kernel->setConfig('full.yml');
         $this->kernel->boot();
 
-        $session = $this->getMockSession();
-
-        $provider = new SessionProvider($session);
+        $provider = new SessionProvider($this->kernel->getContainer()->get('session'));
         $features = $provider->getFeatures($this->kernel->getContainer()->get('pheat.context'));
     }
 }

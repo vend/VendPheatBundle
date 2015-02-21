@@ -37,15 +37,4 @@ abstract class Test extends \PHPUnit_Framework_TestCase
     {
         return 'basics.yml';
     }
-
-    /**
-     * @return Session
-     */
-    protected function getMockSession(array $contents = [])
-    {
-        $session = $this->getMockBuilder(Session::class)
-                        ->getMock();
-
-        return $session;
-    }
 }
