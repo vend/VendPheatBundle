@@ -13,6 +13,8 @@ use Symfony\Component\DependencyInjection\Loader\IniFileLoader;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Vend\PheatBundle\DependencyInjection\ProviderCompilerPass;
 use Vend\PheatBundle\DependencyInjection\VendPheatExtension;
 
 abstract class Test extends PHPUnit_Framework_TestCase
@@ -31,7 +33,19 @@ abstract class Test extends PHPUnit_Framework_TestCase
 
         $this->container = new ContainerBuilder();
         $this->container->registerExtension(new VendPheatExtension());
-        $this->container->addDefinitions(['session' => new Definition('\stdClass')]);
+        $this->container->addCompilerPass(new ProviderCompilerPass());
+        $this->container->set('session', $this->getMockSession());
+    }
+
+    /**
+     * @return Session
+     */
+    protected function getMockSession(array $contents = [])
+    {
+        $session = $this->getMockBuilder(Session::class)
+                        ->getMock();
+
+        return $session;
     }
 
     protected function tearDown()

@@ -31,7 +31,7 @@ pheat:
     context:
         class: Vend\PheatBundle\Pheat\Context
 
-    # Turn off the built-in provider integrations
+    # Turn on the built-in provider integrations
     providers:
         session: true
         config:  true
