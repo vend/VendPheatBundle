@@ -46,7 +46,7 @@ class VendPheatExtension extends Extension
 
     public function getConfiguration(array $config, ContainerBuilder $container)
     {
-        return new Configuration($config, $container);
+        return new Configuration();
     }
 
     public function getXsdValidationBasePath()
