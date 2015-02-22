@@ -16,6 +16,7 @@ install:
   - composer install --dev
 
 before_script:
+  - cp phpunit.xml.dist phpunit.xml
   - composer require --prefer-source --dev symfony/symfony:${SYMFONY_VERSION}
 
 script: sh -c "if [ \"$TRAVIS_PHP_VERSION\" = '5.5' -a \"$SYMFONY_VERSION\" = '2.5.*' ]; then ./vendor/bin/phpunit --coverage-clover=coverage.clover; else ./vendor/bin/phpunit; fi"
