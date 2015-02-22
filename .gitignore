@@ -8,3 +8,6 @@ bin/*
 # Build
 phpunit.xml
 build/*
+.sass-cache
+.bundle
+Resources/public/css
