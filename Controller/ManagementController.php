@@ -40,7 +40,7 @@ class ManagementController extends Controller
                     $form = $entry['form'];
 
                     /**
-                     * @var ProviderInterface|WritableProviderInterface $provider
+                     * @var WritableProviderInterface $provider
                      */
                     $provider = $entry['provider'];
 
@@ -109,6 +109,10 @@ class ManagementController extends Controller
         ]);
     }
 
+    /**
+     * @param Manager $manager
+     * @return array<array<WritableProviderInterface|Form>>
+     */
     protected function getForms(Manager $manager)
     {
         $forms   = [];
