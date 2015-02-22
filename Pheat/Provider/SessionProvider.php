@@ -2,6 +2,7 @@
 
 namespace Vend\PheatBundle\Pheat\Provider;
 
+use InvalidArgumentException;
 use Pheat\ContextInterface;
 use Pheat\Feature\FeatureInterface;
 use Pheat\Provider\ContextProviderInterface;
@@ -30,8 +31,16 @@ class SessionProvider extends Provider implements WritableProviderInterface, Con
     {
         $this->session = $session;
 
-        $this->bag = new NamespacedAttributeBag('_pheat');
-        $this->session->registerBag($this->bag);
+        try {
+            $bag = $this->session->getBag('pheat');
+        } catch (InvalidArgumentException $e) {
+            $bag = new NamespacedAttributeBag('_pheat_feature');
+            $bag->setName('pheat');
+
+            $this->session->registerBag($bag);
+        }
+
+        $this->bag = $bag;
     }
 
     /**
@@ -62,7 +71,9 @@ class SessionProvider extends Provider implements WritableProviderInterface, Con
      */
     protected function getConfiguration()
     {
-        return $this->bag->all();
+        $all = $this->bag->all();
+
+        return $all;
     }
 
     /**

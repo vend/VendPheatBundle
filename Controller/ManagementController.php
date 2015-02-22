@@ -10,6 +10,7 @@ use Pheat\Provider\WritableProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Vend\PheatBundle\Form\Type\FeatureType;
 
 class ManagementController extends Controller
@@ -45,9 +46,16 @@ class ManagementController extends Controller
 
                     $form->handleRequest($request);
 
+                    /**
+                     * @var $session Session
+                     */
+                    $session = $this->get('session');
+
                     if ($form->isValid()) {
+                        $session->getFlashBag()->add('success', 'Feature configuration saved');
                         $provider->setFeature($manager->getContext(), $form->getData());
                     } else {
+                        $session->getFlashBag()->add('warning', 'Feature configuration failed to save');
                         $redirect = false;
                     }
                 }
