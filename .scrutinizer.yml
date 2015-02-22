@@ -5,7 +5,7 @@ imports:
 filter:
     # Trailing slash is converted to /*
     excluded_paths:
-        - test/
+        - Tests/
         - build/
 
 tools:
