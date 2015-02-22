@@ -55,7 +55,7 @@ class AppKernel extends Kernel
 
     public function getLogDir()
     {
-        return __DIR__ . '/../../build/logs';
+        return __DIR__ . '/../build/logs';
     }
 
     /**
