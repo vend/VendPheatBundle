@@ -49,8 +49,11 @@ class VendPheatExtension extends Extension
         return new Configuration();
     }
 
+    /**
+     * @return string|false
+     */
     public function getXsdValidationBasePath()
     {
-        return __DIR__.'/../Resources/config/schema';
+        return __DIR__ . '/../Resources/config/schema';
     }
 }
