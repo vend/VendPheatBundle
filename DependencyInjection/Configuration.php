@@ -98,10 +98,10 @@ class Configuration implements ConfigurationInterface
         $node = $builder->root('features');
 
         $node
-            ->treatTrueLike(['enabled' => true])
-            ->treatFalseLike(['enabled' => false])
-            ->treatNullLike(['enabled' => null])
             ->prototype('array')
+                ->treatTrueLike(['enabled' => true])
+                ->treatFalseLike(['enabled' => false])
+                ->treatNullLike(['enabled' => null])
                 ->beforeNormalization()
                     ->ifTrue(function ($v) { return is_double($v); })
                     ->then(function ($v) { return ['enabled' => true, 'ratio' => $v]; })
