@@ -30,17 +30,7 @@ class SessionProvider extends Provider implements WritableProviderInterface, Con
     public function __construct(Session $session)
     {
         $this->session = $session;
-
-        try {
-            $bag = $this->session->getBag('pheat');
-        } catch (InvalidArgumentException $e) {
-            $bag = new NamespacedAttributeBag('_pheat_feature');
-            $bag->setName('pheat');
-
-            $this->session->registerBag($bag);
-        }
-
-        $this->bag = $bag;
+        $this->bag = $this->session->getBag('pheat');
     }
 
     /**

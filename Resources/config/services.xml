@@ -15,5 +15,12 @@
             <argument type="service" id="pheat.manager" />
             <tag name="data_collector" template="VendPheatBundle:DataCollector:profiler" id="pheat" />
         </service>
+
+        <service id="pheat.session_cache_bag" class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag">
+            <argument type="string">_pheat_feature</argument>
+            <call method="setName">
+                <argument>pheat</argument>
+            </call>
+        </service>
     </services>
 </container>
