@@ -1,10 +1,11 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "824ef5f251173bcf8a5451ab8c67e7db",
+    "hash": "34dbcf11f8252bb7f8f40f989028c272",
+    "content-hash": "a82178e307d25e595627a90b5d4a05e2",
     "packages": [
         {
             "name": "psr/log",
@@ -46,7 +47,7 @@
         },
         {
             "name": "vend/pheat",
-            "version": "dev-master",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vend/pheat.git",
@@ -1933,9 +1934,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "vend/pheat": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
