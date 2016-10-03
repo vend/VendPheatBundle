@@ -39,7 +39,7 @@ this bundle:
 
 But, the basics are:
 
-* `composer require vend/pheat-bundle dev-master` (sorry, no stable release yet)
+* `composer require vend/pheat-bundle`
 * `new Vend\PheatBundle\VendPheatBundle()` in your `Kernel`'s `registerBundles()`
 * Configure the `pheat` key in your config
 
