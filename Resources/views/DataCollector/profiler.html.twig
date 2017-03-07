@@ -2,21 +2,23 @@
 
 {% block toolbar %}
     {% set icon %}
-    <img width="24" height="28" alt="Pheat" style="border-width: 0; vertical-align: middle; margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABPklEQVR4Ab3QMWsTARjH4ceQQMQuim75AKWgESrUrQcKrXsFq1s/gS4dyzm2oJOD4BztUlyLHRLo5GAIOmVwl6bQZjsV87rccnCXi4vPf3x5l98VVQIU72io938e2gBNVV4CgOdGjv2DVGYTIBULLXOfJgbqJdYNjCwsdaw9t4YQAkCiDTSZW6PrjhtGvsjqakRhf7xyFSAtqyGEM7vWLdt2JIx18kolNTbwyTPnEk+kPtjy3juPyms0fHXmpk373girepbsCU8BijXuCrvYF/kmVrRM9RqKBjLcxmeJa3jroXM/PPbb0D2lXgjLeYwHOBUChy6U2hC2sSpMnAonYKyv1C0/HaFn4ptwYmZN18yBCq+FLUtWpAJrWoYudVS4LvyypwXoGgo7quU5p/oOjc1c2qH+4aPvLvQd6AB/AUFAlT61pVqAAAAAAElFTkSuQmCC"/>
-    <span class="sf-toolbar-status">{{ collector.getResolvedCount }}</span>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve"><g fill="#aaa" fill-rule="evenodd"><path d="M16 9h3v15h-3zm0-9h3v4.5h-3zM8 0h3v4.5H8zm0 9h3v6H8zm0 10.5h3V24H8z"/><path d="M12 16.5H1.5V18H12v2.3l3-3-3-3v2.2m-8.5-5.3h-2v1.5h2V15l3-3-3-3m16-3h-18v1.5h18v2.3l3-3-3-3V6"/></g></svg>
+    <span class="sf-toolbar-value">{{ collector.getActiveCount }}</span>
+    <span class="sf-toolbar-label">/</span>
+    <span class="sf-toolbar-value">{{ collector.getTotalCount }}</span>
     {% endset %}
     {% set text %}
     <div class="sf-toolbar-info-piece">
         <b>Resolved</b>
-        <span>{{ collector.getResolvedCount }}</span>
+        <span class="sf-toolbar-status">{{ collector.getResolvedCount }}</span>
     </div>
     <div class="sf-toolbar-info-piece">
         <b>Active</b>
-        <span>{{ collector.getActiveCount }}</span>
+        <span class="sf-toolbar-status">{{ collector.getActiveCount }}</span>
     </div>
     <div class="sf-toolbar-info-piece">
         <b>Total</b>
-        <span>{{ collector.getTotalCount }}</span>
+        <span class="sf-toolbar-status">{{ collector.getTotalCount }}</span>
     </div>
     {% endset %}
     {% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': profiler_url } %}
@@ -25,12 +27,9 @@
 {% block menu %}
     <span class="label">
     <span class="icon">
-        <img width="24" height="28" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAABPklEQVR4Ab3QMWsTARjH4ceQQMQuim75AKWgESrUrQcKrXsFq1s/gS4dyzm2oJOD4BztUlyLHRLo5GAIOmVwl6bQZjsV87rccnCXi4vPf3x5l98VVQIU72io938e2gBNVV4CgOdGjv2DVGYTIBULLXOfJgbqJdYNjCwsdaw9t4YQAkCiDTSZW6PrjhtGvsjqakRhf7xyFSAtqyGEM7vWLdt2JIx18kolNTbwyTPnEk+kPtjy3juPyms0fHXmpk373girepbsCU8BijXuCrvYF/kmVrRM9RqKBjLcxmeJa3jroXM/PPbb0D2lXgjLeYwHOBUChy6U2hC2sSpMnAonYKyv1C0/HaFn4ptwYmZN18yBCq+FLUtWpAJrWoYudVS4LvyypwXoGgo7quU5p/oOjc1c2qH+4aPvLvQd6AB/AUFAlT61pVqAAAAAAElFTkSuQmCC" alt="Pheat" />
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve"><g fill="#aaa" fill-rule="evenodd"><path d="M16 9h3v15h-3zm0-9h3v4.5h-3zM8 0h3v4.5H8zm0 9h3v6H8zm0 10.5h3V24H8z"/><path d="M12 16.5H1.5V18H12v2.3l3-3-3-3v2.2m-8.5-5.3h-2v1.5h2V15l3-3-3-3m16-3h-18v1.5h18v2.3l3-3-3-3V6"/></g></svg>
     </span>
     <strong>Pheat</strong>
-    <span class="count">
-        <span>{{ collector.getResolvedCount }}</span>
-    </span>
 </span>
 {% endblock %}
 
