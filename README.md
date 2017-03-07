@@ -1,6 +1,6 @@
 # VendPheatBundle
 
-## Symfony2 Integration for the Pheat feature manager
+## Symfony Integration for the Pheat feature manager
 
 [![Build Status](https://travis-ci.org/vend/VendPheatBundle.svg?branch=master)](https://travis-ci.org/vend/pheat)
 [![Latest Stable Version](https://poser.pugx.org/vend/pheat-bundle/v/stable.svg)](https://packagist.org/packages/vend/pheat-bundle)
@@ -8,7 +8,7 @@
 [![License](https://poser.pugx.org/vend/pheat-bundle/license.svg)](https://packagist.org/packages/vend/pheat-bundle)
 
 This bundle integrates [Pheat](https://github.com/vend/pheat), a feature
-manager, with Symfony2. It provides you with the ability to activate features
+manager, with Symfony 2 & 3. It provides you with the ability to activate features
 based on dynamic configuration, and provide them to flexible subsets of your
 users and tenants.
 
